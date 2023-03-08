@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xzz2021/xzzFn.git"
+    "url": "git+https://github.com/xzz2021/wsReloadPlugin.git"
   },
   "keywords": [
-    "extension",
+    "chrome extension",
     "webpack",
     "reload"
   ],
@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/xzz2021/xzzFn/issues"
   },
-  "homepage": "https://github.com/xzz2021/xzzFn#readme",
+  "homepage": "https://github.com/xzz2021/wsReloadPlugin",
   "dependencies": {
     "ws": "^8.12.1"
   }
