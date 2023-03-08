@@ -1,0 +1,27 @@
+{
+  "name": "crt-reload-plugin",
+  "version": "1.0.0",
+  "description": "a reload webpack plugin of websocket to develop chrome extension",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xzz2021/xzzFn.git"
+  },
+  "keywords": [
+    "extension",
+    "webpack",
+    "reload"
+  ],
+  "author": "xzz2022",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xzz2021/xzzFn/issues"
+  },
+  "homepage": "https://github.com/xzz2021/xzzFn#readme",
+  "dependencies": {
+    "ws": "^8.12.1"
+  }
+}
