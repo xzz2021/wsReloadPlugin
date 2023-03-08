@@ -1,5 +1,5 @@
 {
-  "name": "crt-reload-plugin",
+  "name": "ws-reload-plugin",
   "version": "1.0.0",
   "description": "a reload webpack plugin of websocket to develop chrome extension",
   "main": "index.js",
