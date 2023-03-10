@@ -1,6 +1,6 @@
 {
   "name": "ws-reload-plugin",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "a reload webpack plugin of websocket to develop chrome extension",
   "main": "index.js",
   "scripts": {
