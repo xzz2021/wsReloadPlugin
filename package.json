@@ -1,7 +1,7 @@
 {
   "name": "ws-reload-plugin",
   "version": "1.0.4",
-  "description": "a reload webpack plugin of websocket to develop chrome extension",
+  "description": "an auto reload webpack plugin to chrome extension developers",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,8 +12,9 @@
   },
   "keywords": [
     "chrome extension",
+    "manifest 3",
     "webpack",
-    "reload"
+    "auto reload"
   ],
   "author": "xzz2022",
   "license": "ISC",
