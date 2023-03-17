@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-27 09:33:17
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-13 09:03:35
+ * @LastEditTime: 2023-03-17 16:00:49
  */
 
 //bgd作为通讯的方案不可行,因为bgd会休眠-----需借由content触发事件------
@@ -53,7 +53,7 @@ class wsAutoReloadPlugin {
 }
 
 
-const createWsConnect = ({recconnectTime = 6, port = 7777, message={type: 'compiler'}}) =>{
+const createWsConnect = ({recconnectTime = 6, port = 7777, message='compiler'}) =>{
   window.recconnectTime2 ? '' : window.recconnectTime2 = 0
   const ws = new WebSocket(`ws://localhost:${port}`)
   function checkConnect({recconnectTime, port, message}){  // 不完全心跳检测,清除上次的ws,新开ws进行初始化操作
@@ -75,7 +75,7 @@ const createWsConnect = ({recconnectTime = 6, port = 7777, message={type: 'compi
   }
   
 ws.onclose =  (e) => {  // 服务端或客户端主动断开时 触发
-    console.log('--------content disconnect!------reconnect:',recconnectTime2,'----------', new Date())
+    console.log('--------content disconnect!------reconnect:',recconnectTime2,'-----', new Date())
     //连接关闭后主动断开此次连接
     ws.close()
     recconnectTime2 ++    //  重连次数
