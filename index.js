@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-27 09:33:17
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-17 16:00:49
+ * @LastEditTime: 2023-03-17 16:17:17
  */
 
 //bgd作为通讯的方案不可行,因为bgd会休眠-----需借由content触发事件------
@@ -53,12 +53,12 @@ class wsAutoReloadPlugin {
 }
 
 
-const createWsConnect = ({reconnetTime = 6, port = 7777, message='compiler'}) =>{
-  window.reconnetTime2 ? '' : window.reconnetTime2 = 0
+const createWsConnect = ({reconnectTime = 6, port = 7777, message='compiler'}) =>{
+  window.reconnectTime2 ? '' : window.reconnectTime2 = 0
   const ws = new WebSocket(`ws://localhost:${port}`)
-  function checkConnect({reconnetTime, port, message}){  // 不完全心跳检测,清除上次的ws,新开ws进行初始化操作
+  function checkConnect({reconnectTime, port, message}){  // 不完全心跳检测,清除上次的ws,新开ws进行初始化操作
     setTimeout(() => {
-      createWsConnect({reconnetTime, port, message})
+      createWsConnect({reconnectTime, port, message})
     }, 3000);
   }
   ws.onopen = (e) => {
@@ -75,11 +75,11 @@ const createWsConnect = ({reconnetTime = 6, port = 7777, message='compiler'}) =>
   }
   
 ws.onclose =  (e) => {  // 服务端或客户端主动断开时 触发
-    console.log('--------content disconnect!------reconnect:',reconnetTime2,'-----', new Date())
+    console.log('--------content disconnect!------reconnect:',reconnectTime2,'-----', new Date())
     //连接关闭后主动断开此次连接
     ws.close()
-    reconnetTime2 ++    //  重连次数
-    if(reconnetTime2 <= reconnetTime)  {checkConnect({reconnetTime, port, message})}
+    reconnectTime2 ++    //  重连次数
+    if(reconnectTime2 <= reconnectTime)  {checkConnect({reconnectTime, port, message})}
   }
 }
 
