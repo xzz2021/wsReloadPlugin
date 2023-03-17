@@ -53,12 +53,12 @@ class wsAutoReloadPlugin {
 }
 
 
-const createWsConnect = ({recconnectTime = 6, port = 7777, message='compiler'}) =>{
-  window.recconnectTime2 ? '' : window.recconnectTime2 = 0
+const createWsConnect = ({reconnetTime = 6, port = 7777, message='compiler'}) =>{
+  window.reconnetTime2 ? '' : window.reconnetTime2 = 0
   const ws = new WebSocket(`ws://localhost:${port}`)
-  function checkConnect({recconnectTime, port, message}){  // 不完全心跳检测,清除上次的ws,新开ws进行初始化操作
+  function checkConnect({reconnetTime, port, message}){  // 不完全心跳检测,清除上次的ws,新开ws进行初始化操作
     setTimeout(() => {
-      createWsConnect({recconnectTime, port, message})
+      createWsConnect({reconnetTime, port, message})
     }, 3000);
   }
   ws.onopen = (e) => {
@@ -75,11 +75,11 @@ const createWsConnect = ({recconnectTime = 6, port = 7777, message='compiler'}) 
   }
   
 ws.onclose =  (e) => {  // 服务端或客户端主动断开时 触发
-    console.log('--------content disconnect!------reconnect:',recconnectTime2,'-----', new Date())
+    console.log('--------content disconnect!------reconnect:',reconnetTime2,'-----', new Date())
     //连接关闭后主动断开此次连接
     ws.close()
-    recconnectTime2 ++    //  重连次数
-    if(recconnectTime2 <= recconnectTime)  {checkConnect({recconnectTime, port, message})}
+    reconnetTime2 ++    //  重连次数
+    if(reconnetTime2 <= reconnetTime)  {checkConnect({reconnetTime, port, message})}
   }
 }
 

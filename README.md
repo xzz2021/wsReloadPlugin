@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-03-08 08:19:37
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-17 16:02:16
+ * @LastEditTime: 2023-03-17 16:13:56
 -->
 # wsReloadPlugin
 
@@ -23,8 +23,8 @@ sorry for a tiny bug, please use the version 1.0.5
   ````
   in your content.js(content_scripts), add the following code
   ````js
-// the parameters and default values: 
-// {recconnectTime = 6, port = 7777, message = 'compiler'} 
+// the parameters and default values: {reconnectTime = 6, port = 7777, message = 'compiler'} 
+// each reconnectTime is 3 seconds, when webpack is stop, it will reconnect 6 times by default
       import { createWsConnect } from 'ws-reload-plugin'
       createWsConnect({}) // {} is required
   ````
