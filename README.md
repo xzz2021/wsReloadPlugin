@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-03-08 08:19:37
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-17 16:13:56
+ * @LastEditTime: 2023-03-18 08:52:18
 -->
 # wsReloadPlugin
 
@@ -36,6 +36,7 @@ sorry for a tiny bug, please use the version 1.0.5
      bgdListenMsg()
 
   ````
+  if you see Uncaught Error: Extension context invalidated, please manual refresh your current tab page.
 ####  The plugin is optimizing, if you have any good idea, just connect me, learn from each other, thank you !!!
 ####  [my telegram group](https://t.me/my7dtd)
 #####  At the same time, I had created another full version cli to develop chrome extension v3 which is use vue3, you can see it in my [github page](https://github.com/xzz2021/chrome-extension-v3-auto-reload).
