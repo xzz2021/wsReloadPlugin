@@ -1,11 +1,11 @@
 <!--
  * @Date: 2023-03-08 08:19:37
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-18 08:52:18
+ * @LastEditTime: 2023-03-18 10:48:17
 -->
 # wsReloadPlugin
 
-sorry for a tiny bug, please use the version 1.0.5 
+sorry for a tiny bug, please use the version >= 1.0.5 
 ### a webpack auto reload plugin for chrome extension v3 developers
 #####  The run steps:  
 #####    &emsp;1.create a websocket server and client in node,when everytime compiler is finished, 
