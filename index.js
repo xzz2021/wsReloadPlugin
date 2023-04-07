@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-27 09:33:17
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-18 09:24:52
+ * @LastEditTime: 2023-04-07 11:20:19
  */
 
 //bgd作为通讯的方案不可行,因为bgd会休眠-----需借由content触发事件------
@@ -92,8 +92,8 @@ const bgdListenMsg = (yourMsg = 'compiler') => {
             chrome.runtime.reload()
             chrome.tabs.reload(tab.id)  // reload the tab which sended the message first
         })
+        sendResponse('reload successful')
       }
-      sendResponse('reload successful')
       })
   })
 }
