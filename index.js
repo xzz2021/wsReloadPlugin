@@ -53,7 +53,7 @@ class wsAutoReloadPlugin {
 }
 
 
-const createWsConnect = ({reconnectTime = 6, port = 7777, message='compiler'}) =>{
+const createWsConnect = ({reconnectTime = 20, port = 7777, message='compiler'}) =>{
   window.reconnectTime2 ? '' : window.reconnectTime2 = 0
   const ws = new WebSocket(`ws://localhost:${port}`)
   function checkConnect({reconnectTime, port, message}){  // 不完全心跳检测,清除上次的ws,新开ws进行初始化操作

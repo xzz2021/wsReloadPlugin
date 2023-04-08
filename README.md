@@ -5,13 +5,12 @@
 -->
 # wsReloadPlugin
 
-sorry for a tiny bug, please use the version >= 1.0.5 
 ### a webpack auto reload plugin for chrome extension v3 developers
 #####  The run steps:  
-#####    &emsp;1.create a websocket server and client in node,when everytime compiler is finished, 
-#####    &emsp;send message to content client(why not service worker? it will sleep, it need event driven)
-#####    &emsp;2.create a websocket client in content to receive message, then send command to service worker
-#####    &emsp;3.service worker listen the command to reload runtime and tab
+ > 1.create a websocket server and client in node,when everytime compiler is finished, 
+  send message to content client(why not service worker? it will sleep, it need event driven)
+ 2.create a websocket client in content to receive message, then send command to service worker
+ 3.service worker listen the command to reload runtime and tab
 
   in your webpack.config.js, add the following code
   ````js
@@ -23,10 +22,10 @@ sorry for a tiny bug, please use the version >= 1.0.5
   ````
   in your content.js(content_scripts), add the following code
   ````js
-// the parameters and default values: {reconnectTime = 6, port = 7777, message = 'compiler'} 
-// each reconnectTime is 3 seconds, when webpack is stop, it will reconnect 6 times by default
+// the parameters and default values: {reconnectTime = 20, port = 7777, message = 'compiler'} 
+// the interval of each reconnect is 3 seconds, it will reconnect 20 times by default
       import { createWsConnect } from 'ws-reload-plugin'
-      createWsConnect({}) // {} is required
+      createWsConnect({})
   ````
   in your background.js(service_worker), add the following code
   ````js
@@ -36,7 +35,3 @@ sorry for a tiny bug, please use the version >= 1.0.5
      bgdListenMsg()
 
   ````
-  if you see Uncaught Error: Extension context invalidated, please manual refresh your current tab page.
-####  The plugin is optimizing, if you have any good idea, just connect me, learn from each other, thank you !!!
-####  [my telegram group](https://t.me/my7dtd)
-#####  At the same time, I had created another full version cli to develop chrome extension v3 which is use vue3, you can see it in my [github page](https://github.com/xzz2021/chrome-extension-v3-auto-reload).
