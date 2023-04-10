@@ -33,3 +33,4 @@
   import { bgdListenMsg } from 'ws-reload-plugin'
   bgdListenMsg()
   ````
+  ###### [my complete vue3-based cli for extension develop](https://github.com/xzz2021/crx-cli)
