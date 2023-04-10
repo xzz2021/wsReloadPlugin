@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-27 09:33:17
  * @LastEditors: xzz
- * @LastEditTime: 2023-04-07 11:20:19
+ * @LastEditTime: 2023-04-10 15:26:36
  */
 
 //bgd作为通讯的方案不可行,因为bgd会休眠-----需借由content触发事件------
@@ -56,6 +56,7 @@ class wsAutoReloadPlugin {
 const createWsConnect = ({reconnectTime = 20, port = 7777, message='compiler'}) =>{
   window.reconnectTime2 ? '' : window.reconnectTime2 = 0
   const ws = new WebSocket(`ws://localhost:${port}`)
+  
   function checkConnect({reconnectTime, port, message}){  // 不完全心跳检测,清除上次的ws,新开ws进行初始化操作
     setTimeout(() => {
       createWsConnect({reconnectTime, port, message})
@@ -63,6 +64,7 @@ const createWsConnect = ({reconnectTime = 20, port = 7777, message='compiler'}) 
   }
   ws.onopen = (e) => {
     console.log('---content----connect----normal-----:', new Date())
+    window.reconnectTime2 = 0
     ws.send("bg")
   }
   ws.onmessage = (e) => {
@@ -78,23 +80,25 @@ ws.onclose =  (e) => {  // 服务端或客户端主动断开时 触发
     console.log('--------content disconnect!------reconnect:',reconnectTime2,'-----', new Date())
     //连接关闭后主动断开此次连接
     ws.close()
-    reconnectTime2 ++    //  重连次数
-    if(reconnectTime2 <= reconnectTime)  {checkConnect({reconnectTime, port, message})}
+    window.reconnectTime2 ++    //  重连次数
+    if(window.reconnectTime2 <= reconnectTime){
+      checkConnect({reconnectTime, port, message})
+    }
   }
 }
 
 const bgdListenMsg = (yourMsg = 'compiler') => {
-  chrome.runtime.onInstalled.addListener(function () {
+  // chrome.runtime.onInstalled.addListener(function () {  //onInstalled重连时会失败有bug,故移除
     chrome.runtime.onMessage.addListener(
       (message, sender, sendResponse) => {
         if(message == yourMsg){
+          sendResponse('reload successful')
           chrome.tabs.query({ url: sender.url }, ([tab]) => {
             chrome.runtime.reload()
             chrome.tabs.reload(tab.id)  // reload the tab which sended the message first
         })
-        sendResponse('reload successful')
       }
-      })
+      // })
   })
 }
 
