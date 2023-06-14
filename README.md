@@ -3,7 +3,7 @@
  * @LastEditors: xzz
  * @LastEditTime: 2023-03-18 10:48:17
 -->
-# wsReloadPlugin
+# wsReloadPlugin [中文](https://github.com/xzz2021/wsReloadPlugin/blob/main/README_zh.md)
 
 ### a webpack auto reload plugin for chrome extension v3 developers
 #####  The run steps:  
