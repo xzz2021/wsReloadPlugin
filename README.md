@@ -33,8 +33,8 @@
   ````js
 // the parameters and default values::  bgdListenMsg(yourMsg = 'compiler')
 // yourMsg must be as same as parameters.message in createWsConnect({})
-    const { bgdListenMsg } = require('ws-reload-plugin')
-    bgdListenMsg()
+  const { bgdListenMsg } = require('ws-reload-plugin')
+  bgdListenMsg()
  // or use ES module
   import { bgdListenMsg } from 'ws-reload-plugin'
   bgdListenMsg()

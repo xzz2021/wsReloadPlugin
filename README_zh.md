@@ -32,8 +32,8 @@
   > background.js(service_worker),添加以下引入代码
   ````js
 // 编译完成发送的消息内容要和content里的一致，默认是'compiler'
-    const { bgdListenMsg } = require('ws-reload-plugin')
-    bgdListenMsg()
+  const { bgdListenMsg } = require('ws-reload-plugin')
+  bgdListenMsg()
 // 或者使用ES module
   import { bgdListenMsg } from 'ws-reload-plugin'
   bgdListenMsg()
