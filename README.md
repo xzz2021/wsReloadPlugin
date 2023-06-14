@@ -23,6 +23,9 @@
   ````js
 // the parameter: {reconnectTime = 20, port = 7777, message = 'compiler'} 
 // the interval of each reconnect is 3 seconds, it will reconnect 20 times by default
+  const { createWsConnect } = require('ws-reload-plugin')
+  createWsConnect({})
+// or use ES module
   import { createWsConnect } from 'ws-reload-plugin'
   createWsConnect({})
   ````
@@ -30,6 +33,9 @@
   ````js
 // the parameters and default values::  bgdListenMsg(yourMsg = 'compiler')
 // yourMsg must be as same as parameters.message in createWsConnect({})
+    const { bgdListenMsg } = require('ws-reload-plugin')
+    bgdListenMsg()
+ // or use ES module
   import { bgdListenMsg } from 'ws-reload-plugin'
   bgdListenMsg()
   ````
