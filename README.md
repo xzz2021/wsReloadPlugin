@@ -3,7 +3,7 @@
  * @LastEditors: xzz
  * @LastEditTime: 2023-03-18 10:48:17
 -->
-# wsReloadPlugin [中文](https://github.com/xzz2021/wsReloadPlugin/blob/main/README_zh.md)
+##### wsReloadPlugin [中文](https://github.com/xzz2021/wsReloadPlugin/blob/main/README_zh.md)
 
 ### a webpack auto reload plugin for chrome extension v3 developers
 #####  The run steps:  
@@ -34,3 +34,5 @@
   bgdListenMsg()
   ````
   ###### [my complete vue3-based cli for extension develop](https://github.com/xzz2021/crx-cli)
+ 
+  ###### here are all history versions [npmjs](https://www.npmjs.com/package/ws-reload-plugin?activeTab=readme)

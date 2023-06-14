@@ -3,7 +3,7 @@
  * @LastEditors: xzz
  * @LastEditTime: 2023-03-18 10:48:17
 -->
-# wsReloadPlugin [English](https://github.com/xzz2021/wsReloadPlugin/blob/main/README.md)
+##### wsReloadPlugin [English](https://github.com/xzz2021/wsReloadPlugin/blob/main/README.md)
 
 ### 基于webpack和websocket开发的谷歌扩展v3开发编译时自动刷新功能模块
 #####  运行原理:  
