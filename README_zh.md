@@ -33,3 +33,5 @@
   bgdListenMsg()
   ````
   ###### [基于webpack搭建的v3版插件完整开发框架](https://github.com/xzz2021/crx-cli)
+
+  ###### 如果有异常，可以在[这里](https://www.npmjs.com/package/ws-reload-plugin?activeTab=readme)安装查看历史版本
