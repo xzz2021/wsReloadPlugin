@@ -6,7 +6,7 @@
 
 //bgd作为通讯的方案不可行,因为bgd会休眠-----需借由content触发事件------
 
-// const pluginName = 'wsAutoReloadPlugin';
+
 const  WebSocketNode  = require ('ws')
 
 class wsAutoReloadPlugin {
@@ -53,7 +53,8 @@ class wsAutoReloadPlugin {
 }
 
 
-const createWsConnect = ({reconnectTime = 20, port = 7777, message='compiler'}) =>{
+const createWsConnect = (options) =>{
+  const {reconnectTime = 20, port = 7777, message='compiler'} = options
   window.reconnectTime2 ? '' : window.reconnectTime2 = 0
   const ws = new WebSocket(`ws://localhost:${port}`)
   
@@ -70,7 +71,6 @@ const createWsConnect = ({reconnectTime = 20, port = 7777, message='compiler'}) 
   ws.onmessage = (e) => {
       if(JSON.parse(e.data) == '编译完成了bg'){
         chrome.runtime.sendMessage( message, (response) => {
-          // console.log("🚀 ~ file: myPluginCopy.js:74 ~ chrome.runtime.sendMessage ~ response:", response)
           if(response == 'reload successful'){ }
         })
       }
@@ -94,8 +94,8 @@ const bgdListenMsg = (yourMsg = 'compiler') => {
         if(message == yourMsg){
           sendResponse('reload successful')
           chrome.tabs.query({ url: sender.url }, ([tab]) => {
-            chrome.runtime.reload()
             chrome.tabs.reload(tab.id)  // reload the tab which sended the message first
+            chrome.runtime.reload()
         })
       }
       // })
