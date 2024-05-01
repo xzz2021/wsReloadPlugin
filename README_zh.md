@@ -32,10 +32,10 @@ content.js(content_scripts)引入代码
 // 默认参数: {reconnectTime = 20, port = 7777, message = 'compiler'}
 // 重连间隔3秒，默认次数20
 const { createWsConnect } = require('ws-reload-plugin')
-createWsConnect({})
+createWsConnect()
 // 或者使用ES module
 import { createWsConnect } from 'ws-reload-plugin'
-createWsConnect({})
+createWsConnect()
 ```
 
 background.js(service_worker)引入代码

@@ -30,10 +30,10 @@ plugins: [new wsAutoReloadPlugin()]
 // the parameter: {reconnectTime = 20, port = 7777, message = 'compiler'}
 // the interval of each reconnect is 3 seconds, it will reconnect 20 times by default
 const { createWsConnect } = require('ws-reload-plugin')
-createWsConnect({})
+createWsConnect()
 // or use ES module
 import { createWsConnect } from 'ws-reload-plugin'
-createWsConnect({})
+createWsConnect()
 ```
 
 > in your background.js(service_worker), add the following code
