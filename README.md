@@ -6,17 +6,22 @@
 
 ##### wsReloadPlugin [中文](https://github.com/xzz2021/wsReloadPlugin/blob/main/README_zh.md)
 
-##### Upate: Fix the bug that the new version of the chrome kernel does not refresh
+### A webpack plugin for chrome extension v3 developers to compile and automatically refresh
 
-### a webpack auto reload plugin for chrome extension v3 developers
+##### Implementation principle:
 
-##### The run steps:
+- 1.create a websocket server and client in node,when everytime compiler is finished,send message to content client(why not service worker? it will sleep and  needs event driven)
+- 2.create a websocket client in content to receive message, then send command to service worker(background)
+- 3.service worker listen the command to reload runtime and current tab
 
-- 1.create a websocket server and client in node,when everytime compiler is finished,send message to content client(why not service worker? it will sleep, it needs event driven)
-- 2.create a websocket client in content to receive message, then send command to service worker
-- 3.service worker listen the command to reload runtime and tab
 
-> in your webpack.config.js, add the following code
+> 1. `Installation Commands:`
+
+```js
+npm install ws-reload-plugin --save-dev
+```
+
+>2. Add the following code to the webpack.config.js file
 
 ```js
 // the parameter:  { port = 7777 }
@@ -24,11 +29,11 @@ const { wsAutoReloadPlugin } = require('ws-reload-plugin')
 plugins: [new wsAutoReloadPlugin()]
 ```
 
-> in your content.js(content_scripts), add the following code
+>3. Add the following code to the content.js(content_scripts) file
 
 ```js
-// the parameter: {reconnectTime = 20, port = 7777, message = 'compiler'}
-// the interval of each reconnect is 3 seconds, it will reconnect 20 times by default
+/* When the ws service is disconnected, it will automatically reconnect,
+with an interval of 3 seconds each time, and the default reconnection is 20 times */
 const { createWsConnect } = require('ws-reload-plugin')
 createWsConnect()
 // or use ES module
@@ -36,7 +41,7 @@ import { createWsConnect } from 'ws-reload-plugin'
 createWsConnect()
 ```
 
-> in your background.js(service_worker), add the following code
+>4. Add the following code to  your service_worker(background) file
 
 ```js
 // the parameters and default values::  bgdListenMsg(yourMsg = 'compiler')

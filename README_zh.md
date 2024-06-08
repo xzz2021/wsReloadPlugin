@@ -2,31 +2,27 @@
 
 #### 这是一个 webpack 打包工具的 plugin,只有浏览器插件开发者用得到,功能类似 webpack 本身就有的 dev-server!
 
-##### 更新: 修复新版本 chrome 内核不刷新的 bug
-
 #### 基于 webpack 和 websocket, 实现浏览器扩展(插件)开发阶段编译完成自动刷新功能!
 
 `运行原理:`
 
 - 1.在 node 环境下创建 websocket 服务端与客户端，每次编译完成后服务端发送信息给 content 客户端；(为什么不直接发送给 background？因为 v3 改为 service worker，有自动休眠机制)
-- 2.content 客户端收到消息后发送给 service worker
+- 2.content 客户端收到消息后发送给 service worker(background)
 - 3.service worker 监听命令并执行刷新
 
-`安装命令:`
+> 1. `安装命令:`
 
 ```js
 npm install ws-reload-plugin --save-dev
 ```
-
-webpack.config.js 配置文件中引入此模块
-
+> 2. webpack.config.js 配置文件中引入此模块
 ```js
 // the parameter:  { port = 7777 }
 const { wsAutoReloadPlugin } = require('ws-reload-plugin')
 plugins: [new wsAutoReloadPlugin()]
 ```
 
-content.js(content_scripts)引入代码
+>3. content.js(content_scripts)引入代码
 
 ```js
 // 默认参数: {reconnectTime = 20, port = 7777, message = 'compiler'}
@@ -38,7 +34,7 @@ import { createWsConnect } from 'ws-reload-plugin'
 createWsConnect()
 ```
 
-background.js(service_worker)引入代码
+>4. background.js(service_worker)引入代码
 
 ```js
 // 编译完成发送的消息内容要和content里的一致，默认是'compiler'
