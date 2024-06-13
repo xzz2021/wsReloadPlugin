@@ -4,6 +4,8 @@
  * @LastEditTime: 2023-03-18 10:48:17
 -->
 
+20240613update: Fixed the bug that the new version of chrome refresh failed!
+
 ##### wsReloadPlugin [中文](https://github.com/xzz2021/wsReloadPlugin/blob/main/README_zh.md)
 
 ### A webpack plugin for chrome extension v3 developers to compile and automatically refresh

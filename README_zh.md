@@ -1,3 +1,6 @@
+
+20240613更新: 修复新版本浏览器刷新失效的bug!
+
 ##### wsReloadPlugin [English](https://github.com/xzz2021/wsReloadPlugin/blob/main/README.md)
 
 #### 这是一个 webpack 打包工具的 plugin,只有浏览器插件开发者用得到,功能类似 webpack 本身就有的 dev-server!
