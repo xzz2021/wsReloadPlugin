@@ -4,11 +4,9 @@
  * @LastEditTime: 2023-03-18 10:48:17
 -->
 
-20240613update: Fixed the bug that the new version of chrome refresh failed!
-
 ##### wsReloadPlugin [中文](https://github.com/xzz2021/wsReloadPlugin/blob/main/README_zh.md)
 
-### A webpack plugin for chrome extension v3 developers to compile and automatically refresh
+### A webpack5 plugin for chrome extension v3 developers to compile and automatically refresh
 
 ##### Implementation principle:
 
@@ -16,23 +14,18 @@
 - 2.create a websocket client in content to receive message, then send command to service worker(background)
 - 3.service worker listen the command to reload runtime and current tab
 
-
-> 1. `Installation Commands:`
+1. `Installation Commands:`
 
 ```js
 npm install ws-reload-plugin --save-dev
 ```
-
->2. Add the following code to the webpack.config.js file
-
+2. Add the following code to the webpack.config.js file
 ```js
 // the parameter:  { port = 7777 }
 const { wsAutoReloadPlugin } = require('ws-reload-plugin')
 plugins: [new wsAutoReloadPlugin()]
 ```
-
->3. Add the following code to the content.js(content_scripts) file
-
+3. Add the following code to the content.js(content_scripts) file
 ```js
 /* When the ws service is disconnected, it will automatically reconnect,
 with an interval of 3 seconds each time, and the default reconnection is 20 times */
@@ -42,9 +35,7 @@ createWsConnect()
 import { createWsConnect } from 'ws-reload-plugin'
 createWsConnect()
 ```
-
->4. Add the following code to  your service_worker(background) file
-
+4. Add the following code to  your service_worker(background) file
 ```js
 // the parameters and default values::  bgdListenMsg(yourMsg = 'compiler')
 // yourMsg must be as same as parameters.message in createWsConnect({})
@@ -53,6 +44,32 @@ bgdListenMsg()
 // or use ES module
 import { bgdListenMsg } from 'ws-reload-plugin'
 bgdListenMsg()
+```
+4.1 If you find that it does not work, it may be because you had used the api of `chrome.runtime.onMessage.addListener` in service_worker file, therefore you need to modify the logic, don't need use bgdListenMsg
+```js
+// source code 
+const bgdListenMsg = (yourMsg = 'compiler') => {
+    chrome.runtime.onMessage.addListener(
+      (message, sender, sendResponse) => {
+        if(message == yourMsg){
+          sendResponse('reload successful')
+          chrome.tabs.query({ url: sender.url }, ([tab]) => {
+            chrome.tabs.reload(tab.id)  // reload the tab which sended the message first
+            chrome.runtime.reload()
+        })
+      }
+  })
+}
+```
+ Simply add the following code to your own logic area
+```js
+if(message == yourMsg){
+      sendResponse('reload successful')
+      chrome.tabs.query({ url: sender.url }, ([tab]) => {
+        chrome.tabs.reload(tab.id)
+        chrome.runtime.reload()
+    })
+}
 ```
 
 ###### [my complete vue3-based cli for extension develop](https://github.com/xzz2021/crx-cli)
