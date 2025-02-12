@@ -1,9 +1,12 @@
-interface obj {
-  reconnectTime: number
-  port: number
-  message: string
+interface OptionsType {
+  port?: number;
+  entryFiles: {
+    content: string;
+    background: string;
+  };
+  autoRun?: {
+    content?: boolean;
+    background?: boolean;
+  };
 }
-export declare function createWsConnect(options:obj):void
-
-
-export declare function bgdListenMsg(yourMsg: string):void
+export declare function WsAutoReloadPlugin(options: OptionsType): void;

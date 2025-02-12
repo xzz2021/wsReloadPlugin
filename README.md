@@ -1,77 +1,58 @@
-<!--
- * @Date: 2023-03-08 08:19:37
- * @LastEditors: xzz
- * @LastEditTime: 2023-03-18 10:48:17
--->
+<!-- ##### wsReloadPlugin [English](https://github.com/xzz2021/wsReloadPlugin/blob/main/README.md) -->
 
-##### wsReloadPlugin [中文](https://github.com/xzz2021/wsReloadPlugin/blob/main/README_zh.md)
+这是一个 webpack 打包工具的 plugin,只有**浏览器插件开发者**用得到,功能类似 webpack 本身就有的 dev-server!
 
-### A webpack5 plugin for chrome extension v3 developers to compile and automatically refresh
+基于 webpack5 和 websocket, 实现浏览器扩展(插件)开发阶段编译完成自动刷新功能!`**此版本为破坏性重构版,不兼容历史版本**`
 
-##### Implementation principle:
+`安装使用:`
 
-- 1.create a websocket server and client in node,when everytime compiler is finished,send message to content client(why not service worker? it will sleep and  needs event driven)
-- 2.create a websocket client in content to receive message, then send command to service worker(background)
-- 3.service worker listen the command to reload runtime and current tab
-
-1. `Installation Commands:`
+1. 安装
 
 ```js
 npm install ws-reload-plugin --save-dev
 ```
-2. Add the following code to the webpack.config.js file
+
+2. webpack.config.js 配置文件中引入此模块,必须传入 content 和 background 的编译输出文件名,比如你打包后的文件目录是 dist/content.js 和 dist/service/background.js, 则按下面传参;
+
 ```js
-// the parameter:  { port = 7777 }
-const { wsAutoReloadPlugin } = require('ws-reload-plugin')
-plugins: [new wsAutoReloadPlugin()]
-```
-3. Add the following code to the content.js(content_scripts) file
-```js
-/* When the ws service is disconnected, it will automatically reconnect,
-with an interval of 3 seconds each time, and the default reconnection is 20 times */
-const { createWsConnect } = require('ws-reload-plugin')
-createWsConnect()
-// or use ES module
-import { createWsConnect } from 'ws-reload-plugin'
-createWsConnect()
-```
-4. Add the following code to  your service_worker(background) file
-```js
-// the parameters and default values::  bgdListenMsg(yourMsg = 'compiler')
-// yourMsg must be as same as parameters.message in createWsConnect({})
-const { bgdListenMsg } = require('ws-reload-plugin')
-bgdListenMsg()
-// or use ES module
-import { bgdListenMsg } from 'ws-reload-plugin'
-bgdListenMsg()
-```
-4.1 If you find that it does not work, it may be because you had used the api of `chrome.runtime.onMessage.addListener` in service_worker file, therefore you need to modify the logic, don't need use bgdListenMsg
-```js
-// source code 
-const bgdListenMsg = (yourMsg = 'compiler') => {
-    chrome.runtime.onMessage.addListener(
-      (message, sender, sendResponse) => {
-        if(message == yourMsg){
-          sendResponse('reload successful')
-          chrome.tabs.query({ url: sender.url }, ([tab]) => {
-            chrome.tabs.reload(tab.id)  // reload the tab which sended the message first
-            chrome.runtime.reload()
-        })
-      }
-  })
-}
-```
- Simply add the following code to your own logic area
-```js
-if(message == yourMsg){
-      sendResponse('reload successful')
-      chrome.tabs.query({ url: sender.url }, ([tab]) => {
-        chrome.tabs.reload(tab.id)
-        chrome.runtime.reload()
-    })
-}
+const { wsAutoReloadPlugin } = require("ws-reload-plugin");
+plugins: [
+  new wsAutoReloadPlugin({
+    port: 2021, // 选传,  默认2021
+    entryFiles: {
+      // 必须传参
+      content: "./content.js", // content 输出文件path
+      background: "./service/background.js", // background 输出文件path
+    },
+    autoRun: { content: true, background: true }, // 选传, 默认都为true
+  }),
+];
 ```
 
-###### [my complete vue3-based cli for extension develop](https://github.com/xzz2021/crx-cli)
+3. ##### 此插件会自动在 content 文件插入 websocket 代码, 创建一个`createWsConnect`函数, background 文件插入监听代码, 创建一个`bgdListenMsg`函数, 默认会直接在顶层调用`
 
-###### here are all history versions [npmjs](https://www.npmjs.com/package/ws-reload-plugin?activeTab=readme)
+4. 如果你想在 content 里自定义控制创建调用, 比如只想在某些页面挂载,请传入参数 `{autoRun: { content: false}}`, 然后自行调用函数`createWsConnect()`即可
+
+5. 如果你想在 service worker 里自定义控制监听和刷新时机, 请传入参数 `{autoRun: { background: false}}`, 然后添加以下代码到你的自定义逻辑中
+
+```js
+//const bgdListenMsg = () => {
+//chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+if (message == "compiler") {
+  sendResponse("reload successful");
+  chrome.tabs.query({ url: sender.url }, ([tab]) => {
+    if (tab) {
+      chrome.tabs.reload(tab.id);
+      chrome.runtime.reload();
+    }
+  });
+}
+//  });
+//};
+```
+
+`实现原理:`
+
+- 1.在 node 环境下创建 websocket 服务端与客户端，每次编译完成后通过 webpack 钩子(hook)发送信息给 content 客户端；(为什么不直接发送给 background？因为 v3 改为 service worker，有自动休眠机制)
+- 2.content 客户端收到消息后再发送给 service worker(background)
+- 3.service worker 监听命令并执行刷新

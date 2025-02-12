@@ -1,10 +1,13 @@
 {
   "name": "ws-reload-plugin",
-  "version": "1.1.2",
-  "description": "an auto reload webpack plugin to chrome extension developers",
+  "version": "2.0.0",
+  "description": "an auto reload webpack plugin for chrome extension developers",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
   },
   "repository": {
     "type": "git",
@@ -13,8 +16,8 @@
   "keywords": [
     "chrome extension",
     "manifest 3",
-    "webpack",
-    "auto reload"
+    "webpack5",
+    "reload"
   ],
   "author": "xzz2022",
   "license": "ISC",
@@ -22,8 +25,5 @@
     "url": "https://github.com/xzz2021/wsReloadPlugin/issues"
   },
   "homepage": "https://github.com/xzz2021",
-  "dependencies": {
-    "ws": "^8.12.1"
-  },
   "types": "index.d.ts"
 }
